@@ -1,3 +1,8 @@
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Netlify-brightgreen?logo=netlify)](https://goldgymworkout.netlify.app/)
+
+## Live Demo
+[View the deployed site on Netlify](https://goldgymworkout.netlify.app/)
+
 ![App Screenshot](Screenshot%20from%202025-05-14%2016-43-11.png)
 
 # CodeAXWorlD Gym Web App
