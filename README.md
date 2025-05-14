@@ -20,15 +20,10 @@ A modern, responsive gym exercise web application built with React. This app fea
 
 ### Installation
 1. Clone this repository or download the source code.
-2. Navigate to the project directory:
-   ```bash
-   cd Gold-Gym
-   ```
-3. Install dependencies:
+2. Install dependencies:
    ```bash
    npm install
    ```
-
 ### Running the App
 Start the development server:
 ```bash
