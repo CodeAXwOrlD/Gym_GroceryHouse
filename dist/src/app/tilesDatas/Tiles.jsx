@@ -1,9 +1,11 @@
+"use strict";
 "use client";
-import { useSelector } from "react-redux";
-export default function GettingDatasLength() {
-    var catData = useSelector(function (state) { return state.Admin.category; });
-    var prodData = useSelector(function (state) { return state.Admin.product; });
-    var orderData = useSelector(function (state) { return state.Admin.Order; });
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_redux_1 = require("react-redux");
+function GettingDatasLength() {
+    var catData = (0, react_redux_1.useSelector)(function (state) { return state.Admin.category; });
+    var prodData = (0, react_redux_1.useSelector)(function (state) { return state.Admin.product; });
+    var orderData = (0, react_redux_1.useSelector)(function (state) { return state.Admin.Order; });
     return [
         {
             icon: "FaUserAlt",
@@ -43,3 +45,4 @@ export default function GettingDatasLength() {
         },
     ];
 }
+exports.default = GettingDatasLength;

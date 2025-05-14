@@ -1,4 +1,28 @@
+"use strict";
 "use client";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,16 +59,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
-import { storage } from '@/utils/Firebase';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { ToastContainer, toast } from 'react-toastify';
-import { TailSpin } from 'react-loader-spinner';
-import { useRouter } from 'next/navigation';
-import { add_new_category } from '@/Services/Admin/category';
-import Cookies from 'js-cookie';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var link_1 = __importDefault(require("next/link"));
+var react_1 = __importStar(require("react"));
+var react_hook_form_1 = require("react-hook-form");
+var Firebase_1 = require("@/utils/Firebase");
+var storage_1 = require("firebase/storage");
+var react_toastify_1 = require("react-toastify");
+var react_loader_spinner_1 = require("react-loader-spinner");
+var navigation_1 = require("next/navigation");
+var category_1 = require("@/Services/Admin/category");
+var js_cookie_1 = __importDefault(require("js-cookie"));
 var uploadImages = function (file) { return __awaiter(void 0, void 0, void 0, function () {
     var createFileName, fileName, storageRef, uploadTask;
     return __generator(this, function (_a) {
@@ -54,15 +82,15 @@ var uploadImages = function (file) { return __awaiter(void 0, void 0, void 0, fu
             return "".concat(file === null || file === void 0 ? void 0 : file.name, "-").concat(timestamp, "-").concat(randomString);
         };
         fileName = createFileName();
-        storageRef = ref(storage, "ecommerce/category/".concat(fileName));
-        uploadTask = uploadBytesResumable(storageRef, file);
+        storageRef = (0, storage_1.ref)(Firebase_1.storage, "ecommerce/category/".concat(fileName));
+        uploadTask = (0, storage_1.uploadBytesResumable)(storageRef, file);
         return [2 /*return*/, new Promise(function (resolve, reject) {
                 uploadTask.on('state_changed', function (snapshot) {
                 }, function (error) {
                     console.log(error);
                     reject(error);
                 }, function () {
-                    getDownloadURL(uploadTask.snapshot.ref).then(function (downloadURL) {
+                    (0, storage_1.getDownloadURL)(uploadTask.snapshot.ref).then(function (downloadURL) {
                         resolve(downloadURL);
                     }).catch(function (error) {
                         console.log(error);
@@ -76,17 +104,17 @@ var maxSize = function (value) {
     var fileSize = value.size / 1024 / 1024;
     return fileSize < 1 ? false : true;
 };
-export default function AddCategory() {
+function AddCategory() {
     var _this = this;
-    var _a = useState(false), loader = _a[0], setLoader = _a[1];
-    var Router = useRouter();
-    useEffect(function () {
+    var _a = (0, react_1.useState)(false), loader = _a[0], setLoader = _a[1];
+    var Router = (0, navigation_1.useRouter)();
+    (0, react_1.useEffect)(function () {
         var user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!Cookies.get('token') || (user === null || user === void 0 ? void 0 : user.role) !== 'admin') {
+        if (!js_cookie_1.default.get('token') || (user === null || user === void 0 ? void 0 : user.role) !== 'admin') {
             Router.push('/');
         }
     }, [Router]);
-    var _b = useForm({
+    var _b = (0, react_hook_form_1.useForm)({
         criteriaMode: "all"
     }), register = _b.register, errors = _b.formState.errors, handleSubmit = _b.handleSubmit;
     var onSubmit = function (data) { return __awaiter(_this, void 0, void 0, function () {
@@ -97,23 +125,23 @@ export default function AddCategory() {
                     setLoader(true);
                     CheckFileSize = maxSize(data.image[0]);
                     if (CheckFileSize)
-                        return [2 /*return*/, toast.error('Image size must be less then 1MB')];
+                        return [2 /*return*/, react_toastify_1.toast.error('Image size must be less then 1MB')];
                     return [4 /*yield*/, uploadImages(data.image[0])];
                 case 1:
                     uploadImageToFirebase = _a.sent();
                     finalData = { categoryName: data.name, categoryDescription: data.description, categoryImage: uploadImageToFirebase, categorySlug: data.slug };
-                    return [4 /*yield*/, add_new_category(finalData)];
+                    return [4 /*yield*/, (0, category_1.add_new_category)(finalData)];
                 case 2:
                     res = _a.sent();
                     if (res.success) {
-                        toast.success(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.success(res === null || res === void 0 ? void 0 : res.message);
                         setTimeout(function () {
                             Router.push('/Dashboard');
                         }, 2000);
                         setLoader(false);
                     }
                     else {
-                        toast.error(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.error(res === null || res === void 0 ? void 0 : res.message);
                         setLoader(false);
                     }
                     return [2 /*return*/];
@@ -124,10 +152,10 @@ export default function AddCategory() {
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul className='dark:text-black'>
                     <li>
-                        <Link href={'/Dashboard'}>
+                        <link_1.default href={'/Dashboard'}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home
-                        </Link>
+                        </link_1.default>
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -139,7 +167,7 @@ export default function AddCategory() {
                 <h1 className='text-2xl py-2 dark:text-black'>Add Category</h1>
             </div>
             {loader ? (<div className='w-full  flex-col h-96 flex items-center justify-center '>
-                        <TailSpin height="50" width="50" color="orange" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
+                        <react_loader_spinner_1.TailSpin height="50" width="50" color="orange" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
                         <p className='text-sm mt-2 font-semibold text-orange-500'>Adding Category Hold Tight ....</p>
                     </div>) : (<div className='w-full h-full flex items-start justify-center'>
                         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg  py-2 flex-col ">
@@ -180,6 +208,7 @@ export default function AddCategory() {
                         </form>
                     </div>)}
 
-            <ToastContainer />
+            <react_toastify_1.ToastContainer />
         </div>);
 }
+exports.default = AddCategory;

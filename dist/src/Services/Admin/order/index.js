@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,8 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import Cookies from "js-cookie";
-export var get_all_orders = function () { return __awaiter(void 0, void 0, void 0, function () {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.update_order_status = exports.get_all_orders = void 0;
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var get_all_orders = function () { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -45,7 +51,7 @@ export var get_all_orders = function () { return __awaiter(void 0, void 0, void 
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': "Bearer ".concat(Cookies.get('token'))
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token'))
                         },
                     })];
             case 1:
@@ -62,7 +68,8 @@ export var get_all_orders = function () { return __awaiter(void 0, void 0, void 
         }
     });
 }); };
-export var update_order_status = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.get_all_orders = get_all_orders;
+var update_order_status = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -74,7 +81,7 @@ export var update_order_status = function (id) { return __awaiter(void 0, void 0
                 return [4 /*yield*/, fetch("/api/Admin/order/update-order-status", {
                         method: 'PUT',
                         headers: {
-                            'Authorization': "Bearer ".concat(Cookies.get('token')),
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token')),
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(id),
@@ -93,3 +100,4 @@ export var update_order_status = function (id) { return __awaiter(void 0, void 0
         }
     });
 }); };
+exports.update_order_status = update_order_status;

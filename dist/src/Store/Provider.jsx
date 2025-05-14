@@ -1,9 +1,13 @@
+"use strict";
 "use client";
-import { store } from './store';
-import { Provider } from 'react-redux';
-export function Providers(_a) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Providers = void 0;
+var store_1 = require("./store");
+var react_redux_1 = require("react-redux");
+function Providers(_a) {
     var children = _a.children;
-    return (<Provider store={store}>
+    return (<react_redux_1.Provider store={store_1.store}>
       {children}
-    </Provider>);
+    </react_redux_1.Provider>);
 }
+exports.Providers = Providers;

@@ -1,8 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OrderReducer = exports.setOrder = exports.OrderSlice = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
     order: [],
 };
-export var OrderSlice = createSlice({
+exports.OrderSlice = (0, toolkit_1.createSlice)({
     name: 'Order',
     initialState: initialState,
     reducers: {
@@ -11,5 +14,5 @@ export var OrderSlice = createSlice({
         },
     },
 });
-export var setOrder = OrderSlice.actions.setOrder;
-export var OrderReducer = OrderSlice.reducer;
+exports.setOrder = exports.OrderSlice.actions.setOrder;
+exports.OrderReducer = exports.OrderSlice.reducer;

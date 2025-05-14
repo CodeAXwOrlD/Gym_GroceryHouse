@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-export var register_me = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.forget_password = exports.login_me = exports.register_me = void 0;
+var register_me = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -59,7 +62,8 @@ export var register_me = function (formData) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
-export var login_me = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+exports.register_me = register_me;
+var login_me = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -84,7 +88,8 @@ export var login_me = function (formData) { return __awaiter(void 0, void 0, voi
         }
     });
 }); };
-export var forget_password = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+exports.login_me = login_me;
+var forget_password = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -109,3 +114,4 @@ export var forget_password = function (formData) { return __awaiter(void 0, void
         }
     });
 }); };
+exports.forget_password = forget_password;

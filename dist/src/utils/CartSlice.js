@@ -1,10 +1,13 @@
+"use strict";
 var _a;
-import { createSlice } from '@reduxjs/toolkit';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.cartReducer = exports.setTotalPrice = exports.setCart = exports.cartSlice = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
     cart: null,
     total: 0,
 };
-export var cartSlice = createSlice({
+exports.cartSlice = (0, toolkit_1.createSlice)({
     name: 'Cart',
     initialState: initialState,
     reducers: {
@@ -16,5 +19,5 @@ export var cartSlice = createSlice({
         }
     },
 });
-export var setCart = (_a = cartSlice.actions, _a.setCart), setTotalPrice = _a.setTotalPrice;
-export var cartReducer = cartSlice.reducer;
+exports.setCart = (_a = exports.cartSlice.actions, _a.setCart), exports.setTotalPrice = _a.setTotalPrice;
+exports.cartReducer = exports.cartSlice.reducer;

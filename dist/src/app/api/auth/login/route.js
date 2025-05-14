@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,23 +35,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from '@/DB/connectDB';
-import User from '@/model/User';
-import Joi from 'joi';
-import { compare } from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { NextResponse } from 'next/server';
-var schema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var User_1 = __importDefault(require("@/model/User"));
+var joi_1 = __importDefault(require("joi"));
+var bcryptjs_1 = require("bcryptjs");
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var server_1 = require("next/server");
+var schema = joi_1.default.object({
+    email: joi_1.default.string().email().required(),
+    password: joi_1.default.string().required(),
 });
-export function POST(req) {
+function POST(req) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
         var _b, email, password, error, checkUser, isMatch, token, finalData, error_1;
         return __generator(this, function (_c) {
             switch (_c.label) {
-                case 0: return [4 /*yield*/, connectDB()];
+                case 0: return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _c.sent();
                     return [4 /*yield*/, req.json()];
@@ -58,29 +64,30 @@ export function POST(req) {
                     _b = _c.sent(), email = _b.email, password = _b.password;
                     error = schema.validate({ email: email, password: password }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
                     _c.label = 3;
                 case 3:
                     _c.trys.push([3, 6, , 7]);
-                    return [4 /*yield*/, User.findOne({ email: email })];
+                    return [4 /*yield*/, User_1.default.findOne({ email: email })];
                 case 4:
                     checkUser = _c.sent();
                     if (!checkUser)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Account not Found" })];
-                    return [4 /*yield*/, compare(password, checkUser.password)];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Account not Found" })];
+                    return [4 /*yield*/, (0, bcryptjs_1.compare)(password, checkUser.password)];
                 case 5:
                     isMatch = _c.sent();
                     if (!isMatch)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Incorrect Password" })];
-                    token = jwt.sign({ id: checkUser._id, email: checkUser.email, role: checkUser === null || checkUser === void 0 ? void 0 : checkUser.role }, (_a = process.env.JWT_SECREAT) !== null && _a !== void 0 ? _a : 'default_secret_dumbScret', { expiresIn: '1d' });
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Incorrect Password" })];
+                    token = jsonwebtoken_1.default.sign({ id: checkUser._id, email: checkUser.email, role: checkUser === null || checkUser === void 0 ? void 0 : checkUser.role }, (_a = process.env.JWT_SECREAT) !== null && _a !== void 0 ? _a : 'default_secret_dumbScret', { expiresIn: '1d' });
                     finalData = { token: token, user: { email: checkUser.email, name: checkUser.name, _id: checkUser._id, role: checkUser === null || checkUser === void 0 ? void 0 : checkUser.role } };
-                    return [2 /*return*/, NextResponse.json({ success: true, message: "Login Successfull", finalData: finalData })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Login Successfull", finalData: finalData })];
                 case 6:
                     error_1 = _c.sent();
                     console.log('Error in register (server) => ', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: "Something Went Wrong Please Retry Later !" })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Something Went Wrong Please Retry Later !" })];
                 case 7: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

@@ -1,4 +1,28 @@
+"use strict";
 "use Client";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,28 +59,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import React, { useEffect, useState } from 'react';
-import { useSWRConfig } from "swr";
-import { toast } from 'react-toastify';
-import DataTable from 'react-data-table-component';
-import Image from 'next/image';
-import Loading from '@/app/loading';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
-import { delete_a_product } from '@/Services/Admin/product';
-export default function ProductDataTable() {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(require("react"));
+var swr_1 = require("swr");
+var react_toastify_1 = require("react-toastify");
+var react_data_table_component_1 = __importDefault(require("react-data-table-component"));
+var image_1 = __importDefault(require("next/image"));
+var loading_1 = __importDefault(require("@/app/loading"));
+var react_redux_1 = require("react-redux");
+var navigation_1 = require("next/navigation");
+var product_1 = require("@/Services/Admin/product");
+function ProductDataTable() {
     var _this = this;
-    var mutate = useSWRConfig().mutate;
-    var router = useRouter();
-    var _a = useState([]), prodData = _a[0], setprodData = _a[1];
-    var data = useSelector(function (state) { return state.Admin.product; });
-    var isLoading = useSelector(function (state) { return state.Admin.productLoading; });
-    var _b = useState(''), search = _b[0], setSearch = _b[1];
-    var _c = useState([]), filteredData = _c[0], setFilteredData = _c[1];
-    useEffect(function () {
+    var mutate = (0, swr_1.useSWRConfig)().mutate;
+    var router = (0, navigation_1.useRouter)();
+    var _a = (0, react_1.useState)([]), prodData = _a[0], setprodData = _a[1];
+    var data = (0, react_redux_1.useSelector)(function (state) { return state.Admin.product; });
+    var isLoading = (0, react_redux_1.useSelector)(function (state) { return state.Admin.productLoading; });
+    var _b = (0, react_1.useState)(''), search = _b[0], setSearch = _b[1];
+    var _c = (0, react_1.useState)([]), filteredData = _c[0], setFilteredData = _c[1];
+    (0, react_1.useEffect)(function () {
         setprodData(data);
     }, [data]);
-    useEffect(function () {
+    (0, react_1.useEffect)(function () {
         setFilteredData(prodData);
     }, [prodData]);
     var columns = [
@@ -72,7 +100,7 @@ export default function ProductDataTable() {
         },
         {
             name: 'Image',
-            cell: function (row) { return <Image src={row === null || row === void 0 ? void 0 : row.productImage} alt='No Image Found' className='py-2' width={100} height={100}/>; }
+            cell: function (row) { return <image_1.default src={row === null || row === void 0 ? void 0 : row.productImage} alt='No Image Found' className='py-2' width={100} height={100}/>; }
         },
         {
             name: 'Action',
@@ -86,21 +114,21 @@ export default function ProductDataTable() {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, delete_a_product(id)];
+                case 0: return [4 /*yield*/, (0, product_1.delete_a_product)(id)];
                 case 1:
                     res = _a.sent();
                     if (res === null || res === void 0 ? void 0 : res.success) {
-                        toast.success(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.success(res === null || res === void 0 ? void 0 : res.message);
                         mutate('/gettingAllProductsFOrAdmin');
                     }
                     else {
-                        toast.error(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.error(res === null || res === void 0 ? void 0 : res.message);
                     }
                     return [2 /*return*/];
             }
         });
     }); };
-    useEffect(function () {
+    (0, react_1.useEffect)(function () {
         if (search === '') {
             setFilteredData(prodData);
         }
@@ -114,7 +142,8 @@ export default function ProductDataTable() {
         }
     }, [search, prodData]);
     return (<div className='w-full h-full'>
-      <DataTable columns={columns} data={filteredData || []} key={'ThisProductData'} pagination keyField="id" title={"Products list"} fixedHeader fixedHeaderScrollHeight='500px' selectableRows selectableRowsHighlight persistTableHead progressPending={isLoading} progressComponent={<Loading />} subHeader subHeaderComponent={<input className='w-60 dark:bg-transparent py-2 px-2  outline-none  border-b-2 border-orange-600' type={"search"} value={search} onChange={function (e) { return setSearch(e.target.value); }} placeholder={"Category Name"}/>} className="bg-white px-4 h-4/6 "/>
+      <react_data_table_component_1.default columns={columns} data={filteredData || []} key={'ThisProductData'} pagination keyField="id" title={"Products list"} fixedHeader fixedHeaderScrollHeight='500px' selectableRows selectableRowsHighlight persistTableHead progressPending={isLoading} progressComponent={<loading_1.default />} subHeader subHeaderComponent={<input className='w-60 dark:bg-transparent py-2 px-2  outline-none  border-b-2 border-orange-600' type={"search"} value={search} onChange={function (e) { return setSearch(e.target.value); }} placeholder={"Category Name"}/>} className="bg-white px-4 h-4/6 "/>
 
     </div>);
 }
+exports.default = ProductDataTable;

@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,27 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from "@/DB/connectDB";
-import AuthCheck from "@/middleware/AuthCheck";
-import { NextResponse } from "next/server";
-import Order from "@/model/Order";
-import Joi from "joi";
-import Cart from "@/model/Cart";
-var createOrderSchema = Joi.object({
-    user: Joi.string().required(),
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = exports.dynamic = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var AuthCheck_1 = __importDefault(require("@/middleware/AuthCheck"));
+var server_1 = require("next/server");
+var Order_1 = __importDefault(require("@/model/Order"));
+var joi_1 = __importDefault(require("joi"));
+var Cart_1 = __importDefault(require("@/model/Cart"));
+var createOrderSchema = joi_1.default.object({
+    user: joi_1.default.string().required(),
 });
-export var dynamic = 'force-dynamic';
-export function POST(req) {
+exports.dynamic = 'force-dynamic';
+function POST(req) {
     return __awaiter(this, void 0, void 0, function () {
         var isAuthenticated, data, user, error, saveData, deleteData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 10, , 11]);
-                    return [4 /*yield*/, connectDB()];
+                    return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, AuthCheck(req)];
+                    return [4 /*yield*/, (0, AuthCheck_1.default)(req)];
                 case 2:
                     isAuthenticated = _a.sent();
                     if (!isAuthenticated) return [3 /*break*/, 8];
@@ -65,25 +71,26 @@ export function POST(req) {
                     user = data.user;
                     error = createOrderSchema.validate({ user: user }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
-                    return [4 /*yield*/, Order.create(data)];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                    return [4 /*yield*/, Order_1.default.create(data)];
                 case 4:
                     saveData = _a.sent();
                     if (!saveData) return [3 /*break*/, 6];
-                    return [4 /*yield*/, Cart.deleteMany({ userID: user })];
+                    return [4 /*yield*/, Cart_1.default.deleteMany({ userID: user })];
                 case 5:
                     deleteData = _a.sent();
-                    return [2 /*return*/, NextResponse.json({ success: true, message: "Products Are on The way !!" })];
-                case 6: return [2 /*return*/, NextResponse.json({ success: false, message: "Failed to create Order . Please try again!" })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Products Are on The way !!" })];
+                case 6: return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Failed to create Order . Please try again!" })];
                 case 7: return [3 /*break*/, 9];
-                case 8: return [2 /*return*/, NextResponse.json({ success: false, message: "You are not authorized Please login!" })];
+                case 8: return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "You are not authorized Please login!" })];
                 case 9: return [3 /*break*/, 11];
                 case 10:
                     error_1 = _a.sent();
                     console.log('Error in creating order :', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
                 case 11: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,17 +35,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from "@/DB/connectDB";
-import { NextResponse } from "next/server";
-import Product from "@/model/Product";
-import Category from "@/model/Category";
-export var dynamic = 'force-dynamic';
-export function GET(req) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GET = exports.dynamic = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var server_1 = require("next/server");
+var Product_1 = __importDefault(require("@/model/Product"));
+var Category_1 = __importDefault(require("@/model/Category"));
+exports.dynamic = 'force-dynamic';
+function GET(req) {
     return __awaiter(this, void 0, void 0, function () {
         var searchParams, id, registerCategoryModel, getData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, connectDB()];
+                case 0: return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _a.sent();
                     _a.label = 2;
@@ -52,27 +58,28 @@ export function GET(req) {
                     _a.trys.push([2, 5, , 6]);
                     searchParams = new URL(req.url).searchParams;
                     id = searchParams.get('id');
-                    return [4 /*yield*/, Category.init()];
+                    return [4 /*yield*/, Category_1.default.init()];
                 case 3:
                     registerCategoryModel = _a.sent();
                     if (!id)
-                        return [2 /*return*/, NextResponse.json({ status: 400, success: false, message: 'Please provide Category id.' })];
-                    return [4 /*yield*/, Product.find({ 'productCategory': id }).populate('productCategory', ' categoryName categorySlug _id')];
+                        return [2 /*return*/, server_1.NextResponse.json({ status: 400, success: false, message: 'Please provide Category id.' })];
+                    return [4 /*yield*/, Product_1.default.find({ 'productCategory': id }).populate('productCategory', ' categoryName categorySlug _id')];
                 case 4:
                     getData = _a.sent();
                     if (getData) {
-                        return [2 /*return*/, NextResponse.json({ success: true, data: getData })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, data: getData })];
                     }
                     else {
-                        return [2 /*return*/, NextResponse.json({ status: 204, success: false, message: 'No Product found.' })];
+                        return [2 /*return*/, server_1.NextResponse.json({ status: 204, success: false, message: 'No Product found.' })];
                     }
                     return [3 /*break*/, 6];
                 case 5:
                     error_1 = _a.sent();
                     console.log('Error in getting  product by id:', error_1);
-                    return [2 /*return*/, NextResponse.json({ status: 500, success: false, message: 'Something went wrong. Please try again!' })];
+                    return [2 /*return*/, server_1.NextResponse.json({ status: 500, success: false, message: 'Something went wrong. Please try again!' })];
                 case 6: return [2 /*return*/];
             }
         });
     });
 }
+exports.GET = GET;

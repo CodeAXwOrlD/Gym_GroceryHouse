@@ -1,4 +1,28 @@
+"use strict";
 "use client";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,37 +59,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import Cookies from 'js-cookie';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import { useForm } from "react-hook-form";
-import { TailSpin } from 'react-loader-spinner';
-import { useDispatch, useSelector } from 'react-redux';
-import CartCard from '@/components/CartCard';
-import { get_all_cart_Items } from '@/Services/common/cart';
-import { setCart } from '@/utils/CartSlice';
-import { setNavActive } from '@/utils/AdminNavSlice';
-import { create_a_new_order } from '@/Services/common/order';
-export default function Page() {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var link_1 = __importDefault(require("next/link"));
+var navigation_1 = require("next/navigation");
+var react_1 = __importStar(require("react"));
+var react_toastify_1 = require("react-toastify");
+var react_hook_form_1 = require("react-hook-form");
+var react_loader_spinner_1 = require("react-loader-spinner");
+var react_redux_1 = require("react-redux");
+var CartCard_1 = __importDefault(require("@/components/CartCard"));
+var cart_1 = require("@/Services/common/cart");
+var CartSlice_1 = require("@/utils/CartSlice");
+var AdminNavSlice_1 = require("@/utils/AdminNavSlice");
+var order_1 = require("@/Services/common/order");
+function Page() {
     var _this = this;
-    var _a = useState(false), loader = _a[0], setLoader = _a[1];
-    var Router = useRouter();
-    var dispatch = useDispatch();
-    var user = useSelector(function (state) { return state.User.userData; });
-    var cartData = useSelector(function (state) { return state.Cart.cart; });
-    var _b = useState(true), loading = _b[0], setLoading = _b[1];
-    useEffect(function () {
-        if (!Cookies.get('token') || user === null) {
+    var _a = (0, react_1.useState)(false), loader = _a[0], setLoader = _a[1];
+    var Router = (0, navigation_1.useRouter)();
+    var dispatch = (0, react_redux_1.useDispatch)();
+    var user = (0, react_redux_1.useSelector)(function (state) { return state.User.userData; });
+    var cartData = (0, react_redux_1.useSelector)(function (state) { return state.Cart.cart; });
+    var _b = (0, react_1.useState)(true), loading = _b[0], setLoading = _b[1];
+    (0, react_1.useEffect)(function () {
+        if (!js_cookie_1.default.get('token') || user === null) {
             Router.push('/');
         }
-        dispatch(setNavActive('Base'));
+        dispatch((0, AdminNavSlice_1.setNavActive)('Base'));
     }, [dispatch, Router]);
-    useEffect(function () {
-        toast.warning("This is Dummy Website Don't add your Origial Details Here !");
+    (0, react_1.useEffect)(function () {
+        react_toastify_1.toast.warning("This is Dummy Website Don't add your Origial Details Here !");
     }, []);
-    useEffect(function () {
+    (0, react_1.useEffect)(function () {
         fetchCartData();
     }, []);
     var fetchCartData = function () { return __awaiter(_this, void 0, void 0, function () {
@@ -75,21 +103,21 @@ export default function Page() {
                 case 0:
                     if (!(user === null || user === void 0 ? void 0 : user._id))
                         return [2 /*return*/, Router.push('/')];
-                    return [4 /*yield*/, get_all_cart_Items(user === null || user === void 0 ? void 0 : user._id)];
+                    return [4 /*yield*/, (0, cart_1.get_all_cart_Items)(user === null || user === void 0 ? void 0 : user._id)];
                 case 1:
                     cartData = _a.sent();
                     if (cartData === null || cartData === void 0 ? void 0 : cartData.success) {
-                        dispatch(setCart(cartData === null || cartData === void 0 ? void 0 : cartData.data));
+                        dispatch((0, CartSlice_1.setCart)(cartData === null || cartData === void 0 ? void 0 : cartData.data));
                     }
                     else {
-                        toast.error(cartData === null || cartData === void 0 ? void 0 : cartData.message);
+                        react_toastify_1.toast.error(cartData === null || cartData === void 0 ? void 0 : cartData.message);
                     }
                     setLoading(false);
                     return [2 /*return*/];
             }
         });
     }); };
-    var _c = useForm({
+    var _c = (0, react_hook_form_1.useForm)({
         criteriaMode: "all"
     }), register = _c.register, errors = _c.formState.errors, handleSubmit = _c.handleSubmit;
     var onSubmit = function (data) { return __awaiter(_this, void 0, void 0, function () {
@@ -124,18 +152,18 @@ export default function Page() {
                         isDelivered: false,
                         deliveredAt: new Date(),
                     };
-                    return [4 /*yield*/, create_a_new_order(finalData)];
+                    return [4 /*yield*/, (0, order_1.create_a_new_order)(finalData)];
                 case 1:
                     res = _a.sent();
                     if (res === null || res === void 0 ? void 0 : res.success) {
-                        toast.success(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.success(res === null || res === void 0 ? void 0 : res.message);
                         setTimeout(function () {
                             Router.push('/');
                         }, 1000);
                         setLoader(false);
                     }
                     else {
-                        toast.error(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.error(res === null || res === void 0 ? void 0 : res.message);
                         setLoader(false);
                     }
                     return [2 /*return*/];
@@ -154,10 +182,10 @@ export default function Page() {
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul className='dark:text-black'>
                     <li>
-                        <Link href={"/"}>
+                        <link_1.default href={"/"}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home
-                        </Link>
+                        </link_1.default>
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
@@ -171,7 +199,7 @@ export default function Page() {
 
 
             {loading || loader ? (<div className='w-full  flex-col h-96 flex items-center justify-center '>
-                        <TailSpin height="50" width="50" color="orange" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
+                        <react_loader_spinner_1.TailSpin height="50" width="50" color="orange" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
                         <p className='text-sm mt-2 font-semibold text-orange-500'>Loading Hold Tight ....</p>
                     </div>) : (<div className='w-full  h-full flex-col md:flex-row flex items-start justify-center'>
 
@@ -180,11 +208,11 @@ export default function Page() {
                                 {(cartData === null || cartData === void 0 ? void 0 : cartData.length) === 0 ?
                 <div className='w-full h-full flex items-center justify-center flex-col'>
                                             <p className='my-4 mx-2 text-lg font-semibold '>No Item Available in Cart</p>
-                                            <Link href={"/"} className='btn text-white'>Shop Now</Link>
+                                            <link_1.default href={"/"} className='btn text-white'>Shop Now</link_1.default>
                                         </div>
                 :
                     cartData === null || cartData === void 0 ? void 0 : cartData.map(function (item) {
-                        return <CartCard key={item === null || item === void 0 ? void 0 : item._id} productID={item === null || item === void 0 ? void 0 : item.productID} userID={item === null || item === void 0 ? void 0 : item.userID} _id={item === null || item === void 0 ? void 0 : item._id} quantity={item === null || item === void 0 ? void 0 : item.quantity}/>;
+                        return <CartCard_1.default key={item === null || item === void 0 ? void 0 : item._id} productID={item === null || item === void 0 ? void 0 : item.productID} userID={item === null || item === void 0 ? void 0 : item.userID} _id={item === null || item === void 0 ? void 0 : item._id} quantity={item === null || item === void 0 ? void 0 : item.quantity}/>;
                     })}
                             </div>
                             <div className='w-full  py-2 my-2 flex justify-end '>
@@ -245,6 +273,7 @@ export default function Page() {
                     </div>)}
 
 
-            <ToastContainer />
+            <react_toastify_1.ToastContainer />
         </div>);
 }
+exports.default = Page;

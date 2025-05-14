@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,22 +35,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from '@/DB/connectDB';
-import User from '@/model/User';
-import Joi from 'joi';
-import { NextResponse } from 'next/server';
-import { hash } from 'bcryptjs';
-var schema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(),
-    name: Joi.string().required()
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var User_1 = __importDefault(require("@/model/User"));
+var joi_1 = __importDefault(require("joi"));
+var server_1 = require("next/server");
+var bcryptjs_1 = require("bcryptjs");
+var schema = joi_1.default.object({
+    email: joi_1.default.string().email().required(),
+    password: joi_1.default.string().min(8).required(),
+    name: joi_1.default.string().required()
 });
-export function POST(req) {
+function POST(req) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, email, password, name, error, ifExist, hashedPassword, createUser, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, connectDB()];
+                case 0: return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _b.sent();
                     return [4 /*yield*/, req.json()];
@@ -57,31 +63,32 @@ export function POST(req) {
                     _a = _b.sent(), email = _a.email, password = _a.password, name = _a.name;
                     error = schema.validate({ email: email, password: password, name: name }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
                     _b.label = 3;
                 case 3:
                     _b.trys.push([3, 9, , 10]);
-                    return [4 /*yield*/, User.findOne({ email: email })];
+                    return [4 /*yield*/, User_1.default.findOne({ email: email })];
                 case 4:
                     ifExist = _b.sent();
                     if (!ifExist) return [3 /*break*/, 5];
-                    return [2 /*return*/, NextResponse.json({ success: false, message: "User Already Exist" })];
-                case 5: return [4 /*yield*/, hash(password, 12)];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "User Already Exist" })];
+                case 5: return [4 /*yield*/, (0, bcryptjs_1.hash)(password, 12)];
                 case 6:
                     hashedPassword = _b.sent();
-                    return [4 /*yield*/, User.create({ email: email, name: name, password: hashedPassword, role: 'user' })];
+                    return [4 /*yield*/, User_1.default.create({ email: email, name: name, password: hashedPassword, role: 'user' })];
                 case 7:
                     createUser = _b.sent();
                     if (createUser)
-                        return [2 /*return*/, NextResponse.json({ success: true, message: "Account created successfully" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Account created successfully" })];
                     _b.label = 8;
                 case 8: return [3 /*break*/, 10];
                 case 9:
                     error_1 = _b.sent();
                     console.log('Error in register (server) => ', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: "Something Went Wrong Please Retry Later !" })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Something Went Wrong Please Retry Later !" })];
                 case 10: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

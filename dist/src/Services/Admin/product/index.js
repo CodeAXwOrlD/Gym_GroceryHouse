@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,8 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import Cookies from "js-cookie";
-export var add_new_product = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.get_product_by_category_id = exports.get_product_by_id = exports.update_a_product = exports.delete_a_product = exports.get_all_products = exports.add_new_product = void 0;
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var add_new_product = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -45,7 +51,7 @@ export var add_new_product = function (formData) { return __awaiter(void 0, void
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': "Bearer ".concat(Cookies.get('token'))
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token'))
                         },
                         body: JSON.stringify(formData),
                     })];
@@ -63,7 +69,8 @@ export var add_new_product = function (formData) { return __awaiter(void 0, void
         }
     });
 }); };
-export var get_all_products = function () { return __awaiter(void 0, void 0, void 0, function () {
+exports.add_new_product = add_new_product;
+var get_all_products = function () { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -86,7 +93,8 @@ export var get_all_products = function () { return __awaiter(void 0, void 0, voi
         }
     });
 }); };
-export var delete_a_product = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.get_all_products = get_all_products;
+var delete_a_product = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -95,7 +103,7 @@ export var delete_a_product = function (id) { return __awaiter(void 0, void 0, v
                 return [4 /*yield*/, fetch("/api/Admin/product/delete-product?id=".concat(id), {
                         method: 'DELETE',
                         headers: {
-                            'Authorization': "Bearer ".concat(Cookies.get('token'))
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token'))
                         },
                     })];
             case 1:
@@ -112,7 +120,8 @@ export var delete_a_product = function (id) { return __awaiter(void 0, void 0, v
         }
     });
 }); };
-export var update_a_product = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+exports.delete_a_product = delete_a_product;
+var update_a_product = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -121,7 +130,7 @@ export var update_a_product = function (formData) { return __awaiter(void 0, voi
                 return [4 /*yield*/, fetch("/api/Admin/product/update-product", {
                         method: 'PUT',
                         headers: {
-                            'Authorization': "Bearer ".concat(Cookies.get('token')),
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token')),
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(formData),
@@ -140,7 +149,8 @@ export var update_a_product = function (formData) { return __awaiter(void 0, voi
         }
     });
 }); };
-export var get_product_by_id = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.update_a_product = update_a_product;
+var get_product_by_id = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -163,7 +173,8 @@ export var get_product_by_id = function (id) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
-export var get_product_by_category_id = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.get_product_by_id = get_product_by_id;
+var get_product_by_category_id = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -186,3 +197,4 @@ export var get_product_by_category_id = function (id) { return __awaiter(void 0,
         }
     });
 }); };
+exports.get_product_by_category_id = get_product_by_category_id;

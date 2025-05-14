@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,21 +35,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import User from '@/model/User';
-import connectDB from '@/DB/connectDB';
-import Joi from 'joi';
-import { hash } from 'bcryptjs';
-import { NextResponse } from 'next/server';
-var schema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(),
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = void 0;
+var User_1 = __importDefault(require("@/model/User"));
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var joi_1 = __importDefault(require("joi"));
+var bcryptjs_1 = require("bcryptjs");
+var server_1 = require("next/server");
+var schema = joi_1.default.object({
+    email: joi_1.default.string().email().required(),
+    password: joi_1.default.string().min(8).required(),
 });
-export function POST(req) {
+function POST(req) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, email, password, error, ifExist, hashedPassword, updatePassword, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, connectDB()];
+                case 0: return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _b.sent();
                     return [4 /*yield*/, req.json()];
@@ -56,32 +62,33 @@ export function POST(req) {
                     _a = _b.sent(), email = _a.email, password = _a.password;
                     error = schema.validate({ email: email, password: password }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
                     if (email === 'mrmoiz.dev@gmail.com')
-                        return [2 /*return*/, NextResponse.json({ success: true, message: "Password Updated Successfully" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Password Updated Successfully" })];
                     _b.label = 3;
                 case 3:
                     _b.trys.push([3, 7, , 8]);
-                    return [4 /*yield*/, User.findOne({ email: email })];
+                    return [4 /*yield*/, User_1.default.findOne({ email: email })];
                 case 4:
                     ifExist = _b.sent();
                     if ((ifExist === null || ifExist === void 0 ? void 0 : ifExist.role) === 'admin')
-                        return [2 /*return*/, NextResponse.json({ success: true, message: "Password Updated Successfully" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Password Updated Successfully" })];
                     if (!ifExist)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Email Not Found" })];
-                    return [4 /*yield*/, hash(password, 12)];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Email Not Found" })];
+                    return [4 /*yield*/, (0, bcryptjs_1.hash)(password, 12)];
                 case 5:
                     hashedPassword = _b.sent();
-                    return [4 /*yield*/, User.findOneAndUpdate({ email: email, password: hashedPassword })];
+                    return [4 /*yield*/, User_1.default.findOneAndUpdate({ email: email, password: hashedPassword })];
                 case 6:
                     updatePassword = _b.sent();
-                    return [2 /*return*/, NextResponse.json({ success: true, message: "Password Updated Successfully" })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Password Updated Successfully" })];
                 case 7:
                     error_1 = _b.sent();
                     console.log('Error in forget Password (server) => ', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: "Something Went Wrong Please Retry Later !" })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Something Went Wrong Please Retry Later !" })];
                 case 8: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

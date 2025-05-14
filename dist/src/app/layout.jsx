@@ -1,24 +1,28 @@
-import './globals.css';
-import { Poppins } from 'next/font/google';
-import { Providers } from '@/Store/Provider';
-import 'react-toastify/dist/ReactToastify.css';
-var poppin = Poppins({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.metadata = void 0;
+require("./globals.css");
+var google_1 = require("next/font/google");
+var Provider_1 = require("@/Store/Provider");
+require("react-toastify/dist/ReactToastify.css");
+var poppin = (0, google_1.Poppins)({
     weight: ['100', '400'],
     subsets: ['latin'],
 });
-export var metadata = {
+exports.metadata = {
     title: 'Ecommerce Next App',
     description: 'Developed by Abdullah Moiz',
     authors: [{ name: "Abdullah Moiz", url: 'https://abdullahmoiz.vercel.app/' }],
 };
-export default function RootLayout(_a) {
+function RootLayout(_a) {
     var children = _a.children;
     return (<html lang="en">
       <body className={poppin.className}>
-        <Providers>
+        <Provider_1.Providers>
           {children}
-        </Providers>
+        </Provider_1.Providers>
       </body>
 
     </html>);
 }
+exports.default = RootLayout;

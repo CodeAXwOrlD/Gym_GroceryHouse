@@ -1,5 +1,8 @@
+"use strict";
 var _a;
-import { createSlice } from '@reduxjs/toolkit';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminReducer = exports.setOrderLoading = exports.setOrderData = exports.setProductData = exports.setProdLoading = exports.setCatLoading = exports.setCategoryData = exports.Admin = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
     category: [],
     catLoading: false,
@@ -8,7 +11,7 @@ var initialState = {
     Order: [],
     orderLoading: false,
 };
-export var Admin = createSlice({
+exports.Admin = (0, toolkit_1.createSlice)({
     name: 'AdminData',
     initialState: initialState,
     reducers: {
@@ -33,5 +36,5 @@ export var Admin = createSlice({
     },
 });
 // Action creators are generated for each case reducer function
-export var setCategoryData = (_a = Admin.actions, _a.setCategoryData), setCatLoading = _a.setCatLoading, setProdLoading = _a.setProdLoading, setProductData = _a.setProductData, setOrderData = _a.setOrderData, setOrderLoading = _a.setOrderLoading;
-export var AdminReducer = Admin.reducer;
+exports.setCategoryData = (_a = exports.Admin.actions, _a.setCategoryData), exports.setCatLoading = _a.setCatLoading, exports.setProdLoading = _a.setProdLoading, exports.setProductData = _a.setProductData, exports.setOrderData = _a.setOrderData, exports.setOrderLoading = _a.setOrderLoading;
+exports.AdminReducer = exports.Admin.reducer;

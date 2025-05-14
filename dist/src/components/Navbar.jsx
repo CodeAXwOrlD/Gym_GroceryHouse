@@ -1,24 +1,52 @@
+"use strict";
 "use client";
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
-import { FaCartArrowDown } from 'react-icons/fa';
-import { CiDeliveryTruck } from 'react-icons/ci';
-import { MdFavorite } from 'react-icons/md';
-export default function Navbar() {
-    var router = useRouter();
-    var _a = useState(false), Scrolled = _a[0], setScrolled = _a[1];
-    var user = useSelector(function (state) { return state.User.userData; });
-    useEffect(function () {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(require("react"));
+var link_1 = __importDefault(require("next/link"));
+var navigation_1 = require("next/navigation");
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var react_redux_1 = require("react-redux");
+var fa_1 = require("react-icons/fa");
+var ci_1 = require("react-icons/ci");
+var md_1 = require("react-icons/md");
+function Navbar() {
+    var router = (0, navigation_1.useRouter)();
+    var _a = (0, react_1.useState)(false), Scrolled = _a[0], setScrolled = _a[1];
+    var user = (0, react_redux_1.useSelector)(function (state) { return state.User.userData; });
+    (0, react_1.useEffect)(function () {
         window.onscroll = function () {
             setScrolled(window.pageYOffset < 30 ? false : true);
             return function () { return window.onscroll = null; };
         };
     }, [Scrolled]);
     var handleLogout = function () {
-        Cookies.remove('token');
+        js_cookie_1.default.remove('token');
         localStorage.clear();
         location.reload();
     };
@@ -29,10 +57,10 @@ export default function Navbar() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow text-black bg-gray-50 rounded-box w-52">
-                        <li><Link href={'/'}>Homepage</Link></li>
-                        <li><Link href={'/'}>Shop</Link></li>
-                        <li><Link href={"/order/view-orders"}>My Orders</Link></li>
-                        <li><Link href={"/Dashboard"}>Dashboard</Link></li>
+                        <li><link_1.default href={'/'}>Homepage</link_1.default></li>
+                        <li><link_1.default href={'/'}>Shop</link_1.default></li>
+                        <li><link_1.default href={"/order/view-orders"}>My Orders</link_1.default></li>
+                        <li><link_1.default href={"/Dashboard"}>Dashboard</link_1.default></li>
                     </ul>
                 </div>
             </div>
@@ -42,9 +70,9 @@ export default function Navbar() {
                     {user ?
             <div className='flex items-center justify-center  min-h-full'>
                          <button onClick={handleLogout} className='btn text-white mx-2'>logout</button>
-                         <button onClick={function () { return router.push("/order/create-order"); }} className='btn btn-circle  mx-2'><FaCartArrowDown className='text-white text-xl'/></button>
-                         <button onClick={function () { return router.push("/bookmark"); }} className='btn btn-circle  mx-2'><MdFavorite className='text-white text-xl'/></button>
-                         <button onClick={function () { return router.push("/order/view-orders"); }} className='btn btn-circle  mx-2'><CiDeliveryTruck className='text-white text-xl'/></button>
+                         <button onClick={function () { return router.push("/order/create-order"); }} className='btn btn-circle  mx-2'><fa_1.FaCartArrowDown className='text-white text-xl'/></button>
+                         <button onClick={function () { return router.push("/bookmark"); }} className='btn btn-circle  mx-2'><md_1.MdFavorite className='text-white text-xl'/></button>
+                         <button onClick={function () { return router.push("/order/view-orders"); }} className='btn btn-circle  mx-2'><ci_1.CiDeliveryTruck className='text-white text-xl'/></button>
                          
                         </div>
             :
@@ -55,3 +83,4 @@ export default function Navbar() {
             </div>
         </div>);
 }
+exports.default = Navbar;

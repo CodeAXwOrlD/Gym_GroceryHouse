@@ -1,4 +1,28 @@
+"use strict";
 "use client";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,32 +59,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { get_order_details } from '@/Services/common/order';
-import Loading from '@/app/loading';
-import Cookies from 'js-cookie';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { GrDeliver } from 'react-icons/gr';
-import { TbListDetails } from 'react-icons/tb';
-import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-export default function Page(_a) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var order_1 = require("@/Services/common/order");
+var loading_1 = __importDefault(require("@/app/loading"));
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var image_1 = __importDefault(require("next/image"));
+var link_1 = __importDefault(require("next/link"));
+var navigation_1 = require("next/navigation");
+var react_1 = __importStar(require("react"));
+var gr_1 = require("react-icons/gr");
+var tb_1 = require("react-icons/tb");
+var react_redux_1 = require("react-redux");
+var react_toastify_1 = require("react-toastify");
+function Page(_a) {
     var _this = this;
     var _b, _c, _d, _e, _f;
     var params = _a.params, searchParams = _a.searchParams;
-    var Router = useRouter();
-    var user = useSelector(function (state) { return state.User.userData; });
-    var _g = useState(), orderData = _g[0], setOrderData = _g[1];
-    var _h = useState(true), loading = _h[0], setLoading = _h[1];
-    useEffect(function () {
+    var Router = (0, navigation_1.useRouter)();
+    var user = (0, react_redux_1.useSelector)(function (state) { return state.User.userData; });
+    var _g = (0, react_1.useState)(), orderData = _g[0], setOrderData = _g[1];
+    var _h = (0, react_1.useState)(true), loading = _h[0], setLoading = _h[1];
+    (0, react_1.useEffect)(function () {
         var user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!Cookies.get('token') || !user) {
+        if (!js_cookie_1.default.get('token') || !user) {
             Router.push('/');
         }
     }, [Router]);
-    useEffect(function () {
+    (0, react_1.useEffect)(function () {
         fetchOrdersData();
     }, []);
     var fetchOrdersData = function () { return __awaiter(_this, void 0, void 0, function () {
@@ -70,7 +98,7 @@ export default function Page(_a) {
                 case 0:
                     if (!(user === null || user === void 0 ? void 0 : user._id))
                         return [2 /*return*/, Router.push('/')];
-                    return [4 /*yield*/, get_order_details(params === null || params === void 0 ? void 0 : params.id)];
+                    return [4 /*yield*/, (0, order_1.get_order_details)(params === null || params === void 0 ? void 0 : params.id)];
                 case 1:
                     orderData = _a.sent();
                     if (orderData === null || orderData === void 0 ? void 0 : orderData.success) {
@@ -79,7 +107,7 @@ export default function Page(_a) {
                         setLoading(false);
                     }
                     else {
-                        toast.error(orderData === null || orderData === void 0 ? void 0 : orderData.message);
+                        react_toastify_1.toast.error(orderData === null || orderData === void 0 ? void 0 : orderData.message);
                         setLoading(false);
                     }
                     return [2 /*return*/];
@@ -90,26 +118,26 @@ export default function Page(_a) {
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul className='dark:text-black'>
                     <li>
-                        <Link href={'/'}>
+                        <link_1.default href={'/'}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home
-                        </Link>
+                        </link_1.default>
                     </li>
                     <li>
-                        <Link href={"/order/view-orders"}>
-                            <GrDeliver className="w-4 h-4 mr-2 stroke-current"/>
+                        <link_1.default href={"/order/view-orders"}>
+                            <gr_1.GrDeliver className="w-4 h-4 mr-2 stroke-current"/>
                             Orders
-                        </Link>
+                        </link_1.default>
                     </li>
                     <li>
 
-                        <TbListDetails className="w-4 h-4 mr-2 stroke-current"/>
+                        <tb_1.TbListDetails className="w-4 h-4 mr-2 stroke-current"/>
                         Order Details
 
                     </li>
                 </ul>
             </div>
-            {loading ? <Loading /> :
+            {loading ? <loading_1.default /> :
             <div className='w-full h-5/6 dark:text-black overflow-y-auto'>
                         <div className='w-full flex px-2 flex-wrap items-center  justify-center'>
                             {/*Order product Card */}
@@ -117,7 +145,7 @@ export default function Page(_a) {
                     var _a, _b, _c;
                     return (<div key={index} className='md:w-96 m-2 w-52 h-52 bg-gray-300  flex md:flex-row  flex-col items-center justify-start'>
                                             <div className='relative w-1/2 h-full'>
-                                                <Image src={(_a = item === null || item === void 0 ? void 0 : item.product) === null || _a === void 0 ? void 0 : _a.productImage} alt="no Image Found" fill/>
+                                                <image_1.default src={(_a = item === null || item === void 0 ? void 0 : item.product) === null || _a === void 0 ? void 0 : _a.productImage} alt="no Image Found" fill/>
                                             </div>
                                             <div className='flex  px-2 py-1 flex-col items-start justify-start'>
                                                 <h1 className='my-2'>{(_b = item === null || item === void 0 ? void 0 : item.product) === null || _b === void 0 ? void 0 : _b.productName}</h1>
@@ -178,6 +206,7 @@ export default function Page(_a) {
 
                         </div>
                     </div>}
-            <ToastContainer />
+            <react_toastify_1.ToastContainer />
         </div>);
 }
+exports.default = Page;

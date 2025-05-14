@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,8 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import Cookies from "js-cookie";
-export var get_all_categories = function () { return __awaiter(void 0, void 0, void 0, function () {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.update_a_category = exports.delete_a_category = exports.get_category_by_id = exports.add_new_category = exports.get_all_categories = void 0;
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var get_all_categories = function () { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -58,7 +64,8 @@ export var get_all_categories = function () { return __awaiter(void 0, void 0, v
         }
     });
 }); };
-export var add_new_category = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+exports.get_all_categories = get_all_categories;
+var add_new_category = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -68,7 +75,7 @@ export var add_new_category = function (formData) { return __awaiter(void 0, voi
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': "Bearer ".concat(Cookies.get('token'))
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token'))
                         },
                         body: JSON.stringify(formData),
                     })];
@@ -86,7 +93,8 @@ export var add_new_category = function (formData) { return __awaiter(void 0, voi
         }
     });
 }); };
-export var get_category_by_id = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.add_new_category = add_new_category;
+var get_category_by_id = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -109,7 +117,8 @@ export var get_category_by_id = function (id) { return __awaiter(void 0, void 0,
         }
     });
 }); };
-export var delete_a_category = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.get_category_by_id = get_category_by_id;
+var delete_a_category = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -118,7 +127,7 @@ export var delete_a_category = function (id) { return __awaiter(void 0, void 0, 
                 return [4 /*yield*/, fetch("/api/Admin/category/delete-category?id=".concat(id), {
                         method: 'DELETE',
                         headers: {
-                            'Authorization': "Bearer ".concat(Cookies.get('token'))
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token'))
                         },
                     })];
             case 1:
@@ -135,7 +144,8 @@ export var delete_a_category = function (id) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
-export var update_a_category = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
+exports.delete_a_category = delete_a_category;
+var update_a_category = function (formData) { return __awaiter(void 0, void 0, void 0, function () {
     var res, data, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -144,7 +154,7 @@ export var update_a_category = function (formData) { return __awaiter(void 0, vo
                 return [4 /*yield*/, fetch("/api/Admin/category/update-category", {
                         method: 'PUT',
                         headers: {
-                            'Authorization': "Bearer ".concat(Cookies.get('token')),
+                            'Authorization': "Bearer ".concat(js_cookie_1.default.get('token')),
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(formData),
@@ -163,3 +173,4 @@ export var update_a_category = function (formData) { return __awaiter(void 0, vo
         }
     });
 }); };
+exports.update_a_category = update_a_category;

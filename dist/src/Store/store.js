@@ -1,18 +1,21 @@
+"use strict";
 'use client';
-import { AdminNavReducer } from '@/utils/AdminNavSlice';
-import { AdminReducer } from '@/utils/AdminSlice';
-import { UserReducer } from '@/utils/UserDataSlice';
-import { configureStore } from '@reduxjs/toolkit';
-import { cartReducer } from '@/utils/CartSlice';
-import { bookmarkReducer } from '@/utils/Bookmark';
-import { OrderReducer } from '@/utils/OrderSlice';
-export var store = configureStore({
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.store = void 0;
+var AdminNavSlice_1 = require("@/utils/AdminNavSlice");
+var AdminSlice_1 = require("@/utils/AdminSlice");
+var UserDataSlice_1 = require("@/utils/UserDataSlice");
+var toolkit_1 = require("@reduxjs/toolkit");
+var CartSlice_1 = require("@/utils/CartSlice");
+var Bookmark_1 = require("@/utils/Bookmark");
+var OrderSlice_1 = require("@/utils/OrderSlice");
+exports.store = (0, toolkit_1.configureStore)({
     reducer: {
-        User: UserReducer,
-        AdminNav: AdminNavReducer,
-        Admin: AdminReducer,
-        Cart: cartReducer,
-        Bookmark: bookmarkReducer,
-        Order: OrderReducer,
+        User: UserDataSlice_1.UserReducer,
+        AdminNav: AdminNavSlice_1.AdminNavReducer,
+        Admin: AdminSlice_1.AdminReducer,
+        Cart: CartSlice_1.cartReducer,
+        Bookmark: Bookmark_1.bookmarkReducer,
+        Order: OrderSlice_1.OrderReducer,
     },
 });

@@ -1,3 +1,4 @@
+"use strict";
 "use client";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -9,6 +10,29 @@ var __assign = (this && this.__assign) || function () {
         return t;
     };
     return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -46,24 +70,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import React, { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Link from 'next/link';
-import { login_me } from '@/Services/auth';
-import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import Navbar from '@/components/Navbar';
-import { setUserData } from '@/utils/UserDataSlice';
-import { useRouter } from 'next/navigation';
-import { TailSpin } from 'react-loader-spinner';
-export default function Login() {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(require("react"));
+var react_toastify_1 = require("react-toastify");
+require("react-toastify/dist/ReactToastify.css");
+var link_1 = __importDefault(require("next/link"));
+var auth_1 = require("@/Services/auth");
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var react_redux_1 = require("react-redux");
+var Navbar_1 = __importDefault(require("@/components/Navbar"));
+var UserDataSlice_1 = require("@/utils/UserDataSlice");
+var navigation_1 = require("next/navigation");
+var react_loader_spinner_1 = require("react-loader-spinner");
+function Login() {
     var _this = this;
-    var dispatch = useDispatch();
-    var Router = useRouter();
-    var _a = useState({ email: "", password: "" }), formData = _a[0], setFormData = _a[1];
-    var _b = useState({ email: "", password: "" }), error = _b[0], setError = _b[1];
-    var _c = useState(false), loading = _c[0], setLoding = _c[1];
+    var dispatch = (0, react_redux_1.useDispatch)();
+    var Router = (0, navigation_1.useRouter)();
+    var _a = (0, react_1.useState)({ email: "", password: "" }), formData = _a[0], setFormData = _a[1];
+    var _b = (0, react_1.useState)({ email: "", password: "" }), error = _b[0], setError = _b[1];
+    var _c = (0, react_1.useState)(false), loading = _c[0], setLoding = _c[1];
     var handleSubmit = function (event) { return __awaiter(_this, void 0, void 0, function () {
         var res, userData, userDataString;
         var _a, _b, _c, _d;
@@ -80,16 +108,16 @@ export default function Login() {
                         setError(__assign(__assign({}, error), { password: "Password Field is required" }));
                         return [2 /*return*/];
                     }
-                    return [4 /*yield*/, login_me(formData)];
+                    return [4 /*yield*/, (0, auth_1.login_me)(formData)];
                 case 1:
                     res = _e.sent();
                     if (res.success) {
                         setLoding(false);
-                        Cookies.set('token', (_a = res === null || res === void 0 ? void 0 : res.finalData) === null || _a === void 0 ? void 0 : _a.token);
+                        js_cookie_1.default.set('token', (_a = res === null || res === void 0 ? void 0 : res.finalData) === null || _a === void 0 ? void 0 : _a.token);
                         localStorage.setItem('user', JSON.stringify((_b = res === null || res === void 0 ? void 0 : res.finalData) === null || _b === void 0 ? void 0 : _b.user));
                         userData = localStorage.getItem('user');
                         userDataString = typeof userData === 'string' ? userData : '';
-                        dispatch(setUserData(JSON.parse(userDataString)));
+                        dispatch((0, UserDataSlice_1.setUserData)(JSON.parse(userDataString)));
                         if (((_d = (_c = res === null || res === void 0 ? void 0 : res.finalData) === null || _c === void 0 ? void 0 : _c.user) === null || _d === void 0 ? void 0 : _d.role) === 'admin') {
                             Router.push('/Dashboard');
                         }
@@ -99,19 +127,19 @@ export default function Login() {
                     }
                     else {
                         setLoding(false);
-                        toast.error(res.message);
+                        react_toastify_1.toast.error(res.message);
                     }
                     return [2 /*return*/];
             }
         });
     }); };
-    useEffect(function () {
-        if (Cookies.get('token')) {
+    (0, react_1.useEffect)(function () {
+        if (js_cookie_1.default.get('token')) {
             Router.push('/');
         }
     }, [Router]);
     return (<>
-            <Navbar />
+            <Navbar_1.default />
             <div className='w-full h-screen bg-gray-50 text-black'>
                 <div className="flex flex-col items-center  text-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
                     <div className="w-full bg-white text-black rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
@@ -139,20 +167,21 @@ export default function Login() {
                                             <label htmlFor="remember" className="text-gray-500  ">Remember me</label>
                                         </div>
                                     </div>
-                                    <Link href="/auth/reset" className="text-sm font-medium text-orange-600 hover:underline ">Forgot password?</Link>
+                                    <link_1.default href="/auth/reset" className="text-sm font-medium text-orange-600 hover:underline ">Forgot password?</link_1.default>
                                 </div>
                                 {loading ? <button type="button" className="w-full flex items-center justify-center text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
-                                        <TailSpin height="20" width="20" color="white" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
+                                        <react_loader_spinner_1.TailSpin height="20" width="20" color="white" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
                                         </button> : <button type="submit" className="w-full text-white bg-orange-600 da hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">Sign in</button>}
                                 
                                 <p className="text-sm text-black ">
-                                    Don’t have an account yet? <Link href={"/auth/register"} className="font-medium text-orange-600 hover:underline ">Sign up</Link>
+                                    Don’t have an account yet? <link_1.default href={"/auth/register"} className="font-medium text-orange-600 hover:underline ">Sign up</link_1.default>
                                 </p>
                             </form>
                         </div>
                     </div>
                 </div>
-                <ToastContainer />
+                <react_toastify_1.ToastContainer />
             </div>
         </>);
 }
+exports.default = Login;

@@ -1,7 +1,12 @@
-import mongoose from "mongoose";
-var OrderSchema = new mongoose.Schema({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = __importDefault(require("mongoose"));
+var OrderSchema = new mongoose_1.default.Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
@@ -9,7 +14,7 @@ var OrderSchema = new mongoose.Schema({
         {
             qty: { type: Number, required: true },
             product: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: mongoose_1.default.Schema.Types.ObjectId,
                 ref: "Products",
             },
         }
@@ -37,5 +42,5 @@ var OrderSchema = new mongoose.Schema({
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
 }, { timestamps: true });
-var Order = mongoose.models.Order || mongoose.model("Order", OrderSchema);
-export default Order;
+var Order = mongoose_1.default.models.Order || mongoose_1.default.model("Order", OrderSchema);
+exports.default = Order;

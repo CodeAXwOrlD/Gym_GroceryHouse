@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,27 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from "@/DB/connectDB";
-import AuthCheck from "@/middleware/AuthCheck";
-import { NextResponse } from "next/server";
-import Bookmark from "@/model/Bookmark";
-import Joi from "joi";
-var bookmark = Joi.object({
-    userID: Joi.string().required(),
-    productID: Joi.string().required()
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = exports.dynamic = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var AuthCheck_1 = __importDefault(require("@/middleware/AuthCheck"));
+var server_1 = require("next/server");
+var Bookmark_1 = __importDefault(require("@/model/Bookmark"));
+var joi_1 = __importDefault(require("joi"));
+var bookmark = joi_1.default.object({
+    userID: joi_1.default.string().required(),
+    productID: joi_1.default.string().required()
 });
-export var dynamic = 'force-dynamic';
-export function POST(req) {
+exports.dynamic = 'force-dynamic';
+function POST(req) {
     return __awaiter(this, void 0, void 0, function () {
         var isAuthenticated, data, productID, userID, error, findProd, saveData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 8, , 9]);
-                    return [4 /*yield*/, connectDB()];
+                    return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, AuthCheck(req)];
+                    return [4 /*yield*/, (0, AuthCheck_1.default)(req)];
                 case 2:
                     isAuthenticated = _a.sent();
                     if (!isAuthenticated) return [3 /*break*/, 6];
@@ -64,30 +70,31 @@ export function POST(req) {
                     productID = data.productID, userID = data.userID;
                     error = bookmark.validate({ productID: productID, userID: userID }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
-                    return [4 /*yield*/, Bookmark.find({ productID: productID, userID: userID })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                    return [4 /*yield*/, Bookmark_1.default.find({ productID: productID, userID: userID })];
                 case 4:
                     findProd = _a.sent();
                     if ((findProd === null || findProd === void 0 ? void 0 : findProd.length) > 0)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Product is Already in Favourites" })];
-                    return [4 /*yield*/, Bookmark.create(data)];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Product is Already in Favourites" })];
+                    return [4 /*yield*/, Bookmark_1.default.create(data)];
                 case 5:
                     saveData = _a.sent();
                     if (saveData) {
-                        return [2 /*return*/, NextResponse.json({ success: true, message: "Product added to Favourites!" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Product added to Favourites!" })];
                     }
                     else {
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Failed to add product to Favourites. Please try again!" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Failed to add product to Favourites. Please try again!" })];
                     }
                     return [3 /*break*/, 7];
-                case 6: return [2 /*return*/, NextResponse.json({ success: false, message: "You are not authorized Please login!" })];
+                case 6: return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "You are not authorized Please login!" })];
                 case 7: return [3 /*break*/, 9];
                 case 8:
                     error_1 = _a.sent();
                     console.log('Error in adding a product to bookmark :', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
                 case 9: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

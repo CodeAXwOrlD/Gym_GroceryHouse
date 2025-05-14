@@ -1,8 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminNavReducer = exports.setNavActive = exports.AdminNav = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
     ActiveNav: 'Base'
 };
-export var AdminNav = createSlice({
+exports.AdminNav = (0, toolkit_1.createSlice)({
     name: 'AdminNav',
     initialState: initialState,
     reducers: {
@@ -12,5 +15,5 @@ export var AdminNav = createSlice({
     },
 });
 // Action creators are generated for each case reducer function
-export var setNavActive = AdminNav.actions.setNavActive;
-export var AdminNavReducer = AdminNav.reducer;
+exports.setNavActive = exports.AdminNav.actions.setNavActive;
+exports.AdminNavReducer = exports.AdminNav.reducer;

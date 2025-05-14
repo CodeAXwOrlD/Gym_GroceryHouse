@@ -1,13 +1,18 @@
-import mongoose from "mongoose";
-var BookmarkSchema = new mongoose.Schema({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = __importDefault(require("mongoose"));
+var BookmarkSchema = new mongoose_1.default.Schema({
     userID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'User',
     },
     productID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'Products',
     },
 }, { timestamps: true });
-var Bookmark = mongoose.models.Bookmark || mongoose.model('Bookmark', BookmarkSchema);
-export default Bookmark;
+var Bookmark = mongoose_1.default.models.Bookmark || mongoose_1.default.model('Bookmark', BookmarkSchema);
+exports.default = Bookmark;

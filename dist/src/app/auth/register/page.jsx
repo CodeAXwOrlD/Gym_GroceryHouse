@@ -1,3 +1,4 @@
+"use strict";
 "use client";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -9,6 +10,29 @@ var __assign = (this && this.__assign) || function () {
         return t;
     };
     return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -46,26 +70,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { register_me } from '@/Services/auth';
-import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
-import Navbar from '@/components/Navbar';
-import { TailSpin } from 'react-loader-spinner';
-export default function Register() {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(require("react"));
+var link_1 = __importDefault(require("next/link"));
+var react_toastify_1 = require("react-toastify");
+require("react-toastify/dist/ReactToastify.css");
+var auth_1 = require("@/Services/auth");
+var navigation_1 = require("next/navigation");
+var js_cookie_1 = __importDefault(require("js-cookie"));
+var Navbar_1 = __importDefault(require("@/components/Navbar"));
+var react_loader_spinner_1 = require("react-loader-spinner");
+function Register() {
     var _this = this;
-    var router = useRouter();
-    useEffect(function () {
-        if (Cookies.get('token')) {
+    var router = (0, navigation_1.useRouter)();
+    (0, react_1.useEffect)(function () {
+        if (js_cookie_1.default.get('token')) {
             router.push('/');
         }
     }, [router]);
-    var _a = useState({ email: "", password: "", name: "" }), formData = _a[0], setFormData = _a[1];
-    var _b = useState({ email: "", password: "", name: '' }), error = _b[0], setError = _b[1];
-    var _c = useState(false), loading = _c[0], setLoding = _c[1];
+    var _a = (0, react_1.useState)({ email: "", password: "", name: "" }), formData = _a[0], setFormData = _a[1];
+    var _b = (0, react_1.useState)({ email: "", password: "", name: '' }), error = _b[0], setError = _b[1];
+    var _c = (0, react_1.useState)(false), loading = _c[0], setLoding = _c[1];
     var handleSubmit = function (event) { return __awaiter(_this, void 0, void 0, function () {
         var data;
         return __generator(this, function (_a) {
@@ -85,26 +113,26 @@ export default function Register() {
                         setError(__assign(__assign({}, error), { name: "Name Field is required" }));
                         return [2 /*return*/];
                     }
-                    return [4 /*yield*/, register_me(formData)];
+                    return [4 /*yield*/, (0, auth_1.register_me)(formData)];
                 case 1:
                     data = _a.sent();
                     if (data.success) {
                         setLoding(false);
-                        toast.success(data.message);
+                        react_toastify_1.toast.success(data.message);
                         setTimeout(function () {
                             router.push('/auth/login');
                         }, 2000);
                     }
                     else {
                         setLoding(false);
-                        toast.error(data.message);
+                        react_toastify_1.toast.error(data.message);
                     }
                     return [2 /*return*/];
             }
         });
     }); };
     return (<>
-    <Navbar />
+    <Navbar_1.default />
     <div className='w-full h-screen bg-gray-50 '>
       <div className="flex flex-col text-center items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0 shadow-xl">
 
@@ -131,19 +159,20 @@ export default function Register() {
               </div>
 
               {loading ? <button type="button" className="w-full flex items-center justify-center text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                                        <TailSpin height="20" width="20" color="white" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
+                                        <react_loader_spinner_1.TailSpin height="20" width="20" color="white" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
                                         </button> : <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Sign up</button>}
 
               
               <p className="text-sm  text-gray-500 ">
-                Already have an account  <Link href="/auth/login" className="font-medium text-orange-600 hover:underline ">Sign In</Link>
+                Already have an account  <link_1.default href="/auth/login" className="font-medium text-orange-600 hover:underline ">Sign In</link_1.default>
               </p>
             </form>
           </div>
         </div>
       </div>
 
-      <ToastContainer />
+      <react_toastify_1.ToastContainer />
     </div>
     </>);
 }
+exports.default = Register;

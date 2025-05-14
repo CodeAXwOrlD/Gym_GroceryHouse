@@ -1,4 +1,28 @@
+"use strict";
 "use client";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,39 +59,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
-import { TailSpin } from 'react-loader-spinner';
-import { useRouter } from 'next/navigation';
-import useSWR from 'swr';
-import Image from 'next/image';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNavActive } from '@/utils/AdminNavSlice';
-import { get_product_by_id, update_a_product } from '@/Services/Admin/product';
-import Cookies from 'js-cookie';
-export default function Page(_a) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var link_1 = __importDefault(require("next/link"));
+var react_1 = __importStar(require("react"));
+var react_hook_form_1 = require("react-hook-form");
+var react_toastify_1 = require("react-toastify");
+var react_loader_spinner_1 = require("react-loader-spinner");
+var navigation_1 = require("next/navigation");
+var swr_1 = __importDefault(require("swr"));
+var image_1 = __importDefault(require("next/image"));
+var react_redux_1 = require("react-redux");
+var AdminNavSlice_1 = require("@/utils/AdminNavSlice");
+var product_1 = require("@/Services/Admin/product");
+var js_cookie_1 = __importDefault(require("js-cookie"));
+function Page(_a) {
     var _this = this;
     var params = _a.params, searchParams = _a.searchParams;
-    var _b = useState(false), loader = _b[0], setLoader = _b[1];
-    var Router = useRouter();
-    var dispatch = useDispatch();
-    var _c = useState(undefined), prodData = _c[0], setprodData = _c[1];
-    var category = useSelector(function (state) { return state.Admin.category; });
-    useEffect(function () {
+    var _b = (0, react_1.useState)(false), loader = _b[0], setLoader = _b[1];
+    var Router = (0, navigation_1.useRouter)();
+    var dispatch = (0, react_redux_1.useDispatch)();
+    var _c = (0, react_1.useState)(undefined), prodData = _c[0], setprodData = _c[1];
+    var category = (0, react_redux_1.useSelector)(function (state) { return state.Admin.category; });
+    (0, react_1.useEffect)(function () {
         var user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!Cookies.get('token') || (user === null || user === void 0 ? void 0 : user.role) !== 'admin') {
+        if (!js_cookie_1.default.get('token') || (user === null || user === void 0 ? void 0 : user.role) !== 'admin') {
             Router.push('/');
         }
     }, [Router]);
-    var _d = useSWR('/gettingProductbyID', function () { return get_product_by_id(params.id); }), data = _d.data, isLoading = _d.isLoading;
+    var _d = (0, swr_1.default)('/gettingProductbyID', function () { return (0, product_1.get_product_by_id)(params.id); }), data = _d.data, isLoading = _d.isLoading;
     if ((data === null || data === void 0 ? void 0 : data.success) !== true)
-        toast.error(data === null || data === void 0 ? void 0 : data.message);
-    useEffect(function () {
+        react_toastify_1.toast.error(data === null || data === void 0 ? void 0 : data.message);
+    (0, react_1.useEffect)(function () {
         setprodData(data === null || data === void 0 ? void 0 : data.data);
     }, [data]);
-    var _e = useForm({
+    var _e = (0, react_hook_form_1.useForm)({
         criteriaMode: "all"
     }), register = _e.register, setValue = _e.setValue, errors = _e.formState.errors, handleSubmit = _e.handleSubmit;
     var setValueofFormData = function () {
@@ -81,7 +109,7 @@ export default function Page(_a) {
             setValue('price', prodData === null || prodData === void 0 ? void 0 : prodData.productPrice);
         }
     };
-    useEffect(function () {
+    (0, react_1.useEffect)(function () {
         if (prodData)
             setValueofFormData();
     }, [prodData]);
@@ -102,19 +130,19 @@ export default function Page(_a) {
                         categoryID: data.categoryID !== (prodData === null || prodData === void 0 ? void 0 : prodData.productCategory) ? data.categoryID : prodData === null || prodData === void 0 ? void 0 : prodData.productCategory,
                     };
                     console.log(updatedData);
-                    return [4 /*yield*/, update_a_product(updatedData)];
+                    return [4 /*yield*/, (0, product_1.update_a_product)(updatedData)];
                 case 1:
                     res = _a.sent();
                     if (res === null || res === void 0 ? void 0 : res.success) {
-                        toast.success(res === null || res === void 0 ? void 0 : res.message);
-                        dispatch(setNavActive('Base'));
+                        react_toastify_1.toast.success(res === null || res === void 0 ? void 0 : res.message);
+                        dispatch((0, AdminNavSlice_1.setNavActive)('Base'));
                         setTimeout(function () {
                             Router.push("/Dashboard");
                         }, 2000);
                         setLoader(false);
                     }
                     else {
-                        toast.error(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.error(res === null || res === void 0 ? void 0 : res.message);
                         setLoader(false);
                     }
                     return [2 /*return*/];
@@ -124,11 +152,11 @@ export default function Page(_a) {
     return (<div className='w-full dark:text-black p-4 min-h-screen  bg-gray-50 flex flex-col '>
       <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
         <ul>
-          <li onClick={function () { return dispatch(setNavActive('Base')); }}>
-            <Link href={'/Dashboard'}>
+          <li onClick={function () { return dispatch((0, AdminNavSlice_1.setNavActive)('Base')); }}>
+            <link_1.default href={'/Dashboard'}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
               Home
-            </Link>
+            </link_1.default>
           </li>
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -140,7 +168,7 @@ export default function Page(_a) {
         <h1 className='text-2xl py-2 '>Update Product</h1>
       </div>
       {isLoading || loader ? (<div className='w-full  flex-col h-96 flex items-center justify-center '>
-            <TailSpin height="50" width="50" color="orange" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
+            <react_loader_spinner_1.TailSpin height="50" width="50" color="orange" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true}/>
             <p className='text-sm mt-2 font-semibold text-orange-500'>updating product Hold Tight ....</p>
           </div>) : (<div className='w-full h-full flex items-start justify-center'>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg  py-2 flex-col ">
@@ -204,7 +232,7 @@ export default function Page(_a) {
                     <label className="label">
                       <span className="label-text">Old Image</span>
                     </label>
-                    <Image src={(prodData === null || prodData === void 0 ? void 0 : prodData.productImage) || ""} alt='No Image Found' width={200} height={200}/>
+                    <image_1.default src={(prodData === null || prodData === void 0 ? void 0 : prodData.productImage) || ""} alt='No Image Found' width={200} height={200}/>
 
                   </div>)}
 
@@ -214,6 +242,7 @@ export default function Page(_a) {
             </form>
           </div>)}
 
-      <ToastContainer />
+      <react_toastify_1.ToastContainer />
     </div>);
 }
+exports.default = Page;

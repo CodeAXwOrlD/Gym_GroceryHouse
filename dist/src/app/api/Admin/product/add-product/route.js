@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,33 +35,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from "@/DB/connectDB";
-import AuthCheck from "@/middleware/AuthCheck";
-import { NextResponse } from "next/server";
-import Product from "@/model/Product";
-import Joi from "joi";
-var AddProductSchema = Joi.object({
-    productName: Joi.string().required(),
-    productDescription: Joi.string().required(),
-    productImage: Joi.string().required(),
-    productQuantity: Joi.number().required(),
-    productSlug: Joi.string().required(),
-    productPrice: Joi.number().required(),
-    productFeatured: Joi.boolean().required(),
-    productCategory: Joi.required()
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = exports.dynamic = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var AuthCheck_1 = __importDefault(require("@/middleware/AuthCheck"));
+var server_1 = require("next/server");
+var Product_1 = __importDefault(require("@/model/Product"));
+var joi_1 = __importDefault(require("joi"));
+var AddProductSchema = joi_1.default.object({
+    productName: joi_1.default.string().required(),
+    productDescription: joi_1.default.string().required(),
+    productImage: joi_1.default.string().required(),
+    productQuantity: joi_1.default.number().required(),
+    productSlug: joi_1.default.string().required(),
+    productPrice: joi_1.default.number().required(),
+    productFeatured: joi_1.default.boolean().required(),
+    productCategory: joi_1.default.required()
 });
-export var dynamic = 'force-dynamic';
-export function POST(req) {
+exports.dynamic = 'force-dynamic';
+function POST(req) {
     return __awaiter(this, void 0, void 0, function () {
         var isAuthenticated, data, productCategory, productDescription, productFeatured, productImage, productName, productPrice, productQuantity, productSlug, error, saveData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 7, , 8]);
-                    return [4 /*yield*/, connectDB()];
+                    return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, AuthCheck(req)];
+                    return [4 /*yield*/, (0, AuthCheck_1.default)(req)];
                 case 2:
                     isAuthenticated = _a.sent();
                     if (!(isAuthenticated === 'admin')) return [3 /*break*/, 5];
@@ -70,25 +76,26 @@ export function POST(req) {
                     productCategory = data.productCategory, productDescription = data.productDescription, productFeatured = data.productFeatured, productImage = data.productImage, productName = data.productName, productPrice = data.productPrice, productQuantity = data.productQuantity, productSlug = data.productSlug;
                     error = AddProductSchema.validate({ productCategory: productCategory, productDescription: productDescription, productFeatured: productFeatured, productImage: productImage, productName: productName, productPrice: productPrice, productQuantity: productQuantity, productSlug: productSlug }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
-                    return [4 /*yield*/, Product.create(data)];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                    return [4 /*yield*/, Product_1.default.create(data)];
                 case 4:
                     saveData = _a.sent();
                     if (saveData) {
-                        return [2 /*return*/, NextResponse.json({ success: true, message: "Product added successfully!" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Product added successfully!" })];
                     }
                     else {
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Failed to add the Product. Please try again!" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Failed to add the Product. Please try again!" })];
                     }
                     return [3 /*break*/, 6];
-                case 5: return [2 /*return*/, NextResponse.json({ success: false, message: "You are not authorized." })];
+                case 5: return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "You are not authorized." })];
                 case 6: return [3 /*break*/, 8];
                 case 7:
                     error_1 = _a.sent();
                     console.log('Error in adding a new Product:', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
                 case 8: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

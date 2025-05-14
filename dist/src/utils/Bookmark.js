@@ -1,8 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bookmarkReducer = exports.setBookmark = exports.BookmarkSlice = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
     bookmark: [],
 };
-export var BookmarkSlice = createSlice({
+exports.BookmarkSlice = (0, toolkit_1.createSlice)({
     name: 'Bookmark',
     initialState: initialState,
     reducers: {
@@ -11,5 +14,5 @@ export var BookmarkSlice = createSlice({
         },
     },
 });
-export var setBookmark = BookmarkSlice.actions.setBookmark;
-export var bookmarkReducer = BookmarkSlice.reducer;
+exports.setBookmark = exports.BookmarkSlice.actions.setBookmark;
+exports.bookmarkReducer = exports.BookmarkSlice.reducer;

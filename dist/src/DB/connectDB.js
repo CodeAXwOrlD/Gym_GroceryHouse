@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import mongoose from 'mongoose';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = __importDefault(require("mongoose"));
 var options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -44,11 +49,11 @@ var connectDB = function () { return __awaiter(void 0, void 0, void 0, function 
     var connectionUrl;
     return __generator(this, function (_a) {
         connectionUrl = process.env.DB_URI;
-        mongoose.connect(connectionUrl, options)
+        mongoose_1.default.connect(connectionUrl, options)
             .then(function () { return console.log("Database connected successfully"); })
             .catch(function (err) { return console.log("Getting Error from DB connection" + err.message); });
-        mongoose.set('strictQuery', false);
+        mongoose_1.default.set('strictQuery', false);
         return [2 /*return*/];
     });
 }); };
-export default connectDB;
+exports.default = connectDB;

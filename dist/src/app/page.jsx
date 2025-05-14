@@ -1,4 +1,28 @@
+"use strict";
 "use client";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,76 +59,81 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import React, { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import Hero from '@/components/Hero';
-import FeaturedProduct from '@/components/FeaturedProduct';
-import TopCategories from '@/components/TopCategories';
-import { get_all_categories } from '@/Services/Admin/category';
-import { get_all_products } from '@/Services/Admin/product';
-import { toast, ToastContainer } from 'react-toastify';
-import { setCategoryData, setCatLoading, setProdLoading, setProductData } from '@/utils/AdminSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import Loading from './loading';
-import { setUserData } from '@/utils/UserDataSlice';
-export default function Home() {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(require("react"));
+var Navbar_1 = __importDefault(require("@/components/Navbar"));
+var Footer_1 = __importDefault(require("@/components/Footer"));
+var Hero_1 = __importDefault(require("@/components/Hero"));
+var FeaturedProduct_1 = __importDefault(require("@/components/FeaturedProduct"));
+var TopCategories_1 = __importDefault(require("@/components/TopCategories"));
+var category_1 = require("@/Services/Admin/category");
+var product_1 = require("@/Services/Admin/product");
+var react_toastify_1 = require("react-toastify");
+var AdminSlice_1 = require("@/utils/AdminSlice");
+var react_redux_1 = require("react-redux");
+var react_2 = require("react");
+var loading_1 = __importDefault(require("./loading"));
+var UserDataSlice_1 = require("@/utils/UserDataSlice");
+function Home() {
     var _this = this;
-    var dispatch = useDispatch();
-    var categoryLoading = useSelector(function (state) { return state.Admin.catLoading; });
-    var productLoading = useSelector(function (state) { return state.Admin.productLoading; });
-    var _a = useState(true), loading = _a[0], setLoading = _a[1];
-    var _b = useState(16 / 9), ratio = _b[0], setRatio = _b[1];
-    useEffect(function () {
-        toast.warning("Application is under development , some features may not work properly");
-        toast.warning('This is a demo website, you can not buy anything from here');
+    var dispatch = (0, react_redux_1.useDispatch)();
+    var categoryLoading = (0, react_redux_1.useSelector)(function (state) { return state.Admin.catLoading; });
+    var productLoading = (0, react_redux_1.useSelector)(function (state) { return state.Admin.productLoading; });
+    var _a = (0, react_1.useState)(true), loading = _a[0], setLoading = _a[1];
+    var _b = (0, react_1.useState)(16 / 9), ratio = _b[0], setRatio = _b[1];
+    (0, react_2.useEffect)(function () {
+        react_toastify_1.toast.warning("Application is under development , some features may not work properly");
+        react_toastify_1.toast.warning('This is a demo website, you can not buy anything from here');
     }, []);
-    useEffect(function () {
+    (0, react_2.useEffect)(function () {
         var userData = localStorage.getItem('user');
         if (!userData)
             return;
-        dispatch(setUserData(JSON.parse(userData)));
+        dispatch((0, UserDataSlice_1.setUserData)(JSON.parse(userData)));
     }, []);
-    useEffect(function () {
+    (0, react_2.useEffect)(function () {
         FetchDataOFProductAndCategory();
     }, []);
     var FetchDataOFProductAndCategory = function () { return __awaiter(_this, void 0, void 0, function () {
         var categoryData, productData;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, get_all_categories()];
+                case 0: return [4 /*yield*/, (0, category_1.get_all_categories)()];
                 case 1:
                     categoryData = _a.sent();
                     if ((categoryData === null || categoryData === void 0 ? void 0 : categoryData.success) !== true)
-                        toast.error(categoryData === null || categoryData === void 0 ? void 0 : categoryData.message);
-                    dispatch(setCategoryData(categoryData === null || categoryData === void 0 ? void 0 : categoryData.data));
-                    return [4 /*yield*/, get_all_products()];
+                        react_toastify_1.toast.error(categoryData === null || categoryData === void 0 ? void 0 : categoryData.message);
+                    dispatch((0, AdminSlice_1.setCategoryData)(categoryData === null || categoryData === void 0 ? void 0 : categoryData.data));
+                    return [4 /*yield*/, (0, product_1.get_all_products)()];
                 case 2:
                     productData = _a.sent();
                     if ((productData === null || productData === void 0 ? void 0 : productData.success) !== true)
-                        toast.error(productData === null || productData === void 0 ? void 0 : productData.message);
-                    dispatch(setProductData(productData === null || productData === void 0 ? void 0 : productData.data));
+                        react_toastify_1.toast.error(productData === null || productData === void 0 ? void 0 : productData.message);
+                    dispatch((0, AdminSlice_1.setProductData)(productData === null || productData === void 0 ? void 0 : productData.data));
                     setLoading(false);
                     return [2 /*return*/];
             }
         });
     }); };
-    useEffect(function () {
-        dispatch(setCatLoading(loading));
-        dispatch(setProdLoading(loading));
+    (0, react_2.useEffect)(function () {
+        dispatch((0, AdminSlice_1.setCatLoading)(loading));
+        dispatch((0, AdminSlice_1.setProdLoading)(loading));
     }, [categoryLoading, productLoading, dispatch, loading]);
     return (<>
-      <Navbar />
-      <Hero setRatio={setRatio}/>
-      {loading ? <Loading /> :
+      <Navbar_1.default />
+      <Hero_1.default setRatio={setRatio}/>
+      {loading ? <loading_1.default /> :
             <>
 
-            <TopCategories />
-            <FeaturedProduct />
-            <Footer />
+            <TopCategories_1.default />
+            <FeaturedProduct_1.default />
+            <Footer_1.default />
 
           </>}
-      <ToastContainer />
+      <react_toastify_1.ToastContainer />
     </>);
 }
+exports.default = Home;

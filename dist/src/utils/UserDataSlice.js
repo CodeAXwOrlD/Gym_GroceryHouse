@@ -1,10 +1,13 @@
+"use strict";
 var _a;
-import { createSlice } from '@reduxjs/toolkit';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserReducer = exports.setUserToken = exports.setUserData = exports.userSlice = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
     userData: null,
     userToken: null,
 };
-export var userSlice = createSlice({
+exports.userSlice = (0, toolkit_1.createSlice)({
     name: 'User',
     initialState: initialState,
     reducers: {
@@ -17,5 +20,5 @@ export var userSlice = createSlice({
     },
 });
 // Action creators are generated for each case reducer function
-export var setUserData = (_a = userSlice.actions, _a.setUserData), setUserToken = _a.setUserToken;
-export var UserReducer = userSlice.reducer;
+exports.setUserData = (_a = exports.userSlice.actions, _a.setUserData), exports.setUserToken = _a.setUserToken;
+exports.UserReducer = exports.userSlice.reducer;

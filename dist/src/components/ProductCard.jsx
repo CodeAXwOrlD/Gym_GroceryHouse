@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,34 +35,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { bookmark_product } from '@/Services/common/bookmark';
-import { add_to_cart } from '@/Services/common/cart';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import React from 'react';
-import { BsCartPlus } from 'react-icons/bs';
-import { MdFavorite } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-export default function ProductCard(_a) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var bookmark_1 = require("@/Services/common/bookmark");
+var cart_1 = require("@/Services/common/cart");
+var image_1 = __importDefault(require("next/image"));
+var navigation_1 = require("next/navigation");
+var react_1 = __importDefault(require("react"));
+var bs_1 = require("react-icons/bs");
+var md_1 = require("react-icons/md");
+var react_redux_1 = require("react-redux");
+var react_toastify_1 = require("react-toastify");
+function ProductCard(_a) {
     var _this = this;
     var productName = _a.productName, productFeatured = _a.productFeatured, productImage = _a.productImage, productCategory = _a.productCategory, productPrice = _a.productPrice, _id = _a._id, productSlug = _a.productSlug;
-    var router = useRouter();
-    var user = useSelector(function (state) { return state.User.userData; });
+    var router = (0, navigation_1.useRouter)();
+    var user = (0, react_redux_1.useSelector)(function (state) { return state.User.userData; });
     var AddToCart = function () { return __awaiter(_this, void 0, void 0, function () {
         var finalData, res;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     finalData = { productID: _id, userID: user === null || user === void 0 ? void 0 : user._id };
-                    return [4 /*yield*/, add_to_cart(finalData)];
+                    return [4 /*yield*/, (0, cart_1.add_to_cart)(finalData)];
                 case 1:
                     res = _a.sent();
                     if (res === null || res === void 0 ? void 0 : res.success) {
-                        toast.success(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.success(res === null || res === void 0 ? void 0 : res.message);
                     }
                     else {
-                        toast.error(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.error(res === null || res === void 0 ? void 0 : res.message);
                     }
                     return [2 /*return*/];
             }
@@ -73,14 +78,14 @@ export default function ProductCard(_a) {
             switch (_a.label) {
                 case 0:
                     finalData = { productID: _id, userID: user === null || user === void 0 ? void 0 : user._id };
-                    return [4 /*yield*/, bookmark_product(finalData)];
+                    return [4 /*yield*/, (0, bookmark_1.bookmark_product)(finalData)];
                 case 1:
                     res = _a.sent();
                     if (res === null || res === void 0 ? void 0 : res.success) {
-                        toast.success(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.success(res === null || res === void 0 ? void 0 : res.message);
                     }
                     else {
-                        toast.error(res === null || res === void 0 ? void 0 : res.message);
+                        react_toastify_1.toast.error(res === null || res === void 0 ? void 0 : res.message);
                     }
                     return [2 /*return*/];
             }
@@ -88,16 +93,17 @@ export default function ProductCard(_a) {
     }); };
     return (<div className="card text-black cursor-pointer card-compact m-3 w-80 bg-white shadow-xl relative">
             <div onClick={function () { return router.push("/product/product-detail/".concat(_id)); }} className='w-full rounded relative h-60'>
-                <Image src={productImage || '/images98.jpg'} alt='no Image' className='rounded' fill/>
+                <image_1.default src={productImage || '/images98.jpg'} alt='no Image' className='rounded' fill/>
             </div>
 
             <div className="card-body">
                 <h2 className="card-title" onClick={function () { return router.push("/product/product-detail/".concat(_id)); }}>{productName} </h2>
                 <p className='font-semibold' onClick={function () { return router.push("/product/product-detail/".concat(_id)); }}>{"Rs ".concat(productPrice)}</p>
                 <div className="card-actions justify-end z-20">
-                    <button onClick={AddToCart} className="btn  btn-circle btn-ghost "><BsCartPlus className='text-2xl text-orange-600 font-semibold'/></button>
-                    <button onClick={AddToBookmark} className="btn btn-circle btn-ghost absolute top-0 right-0 "><MdFavorite className='text-2xl text-orange-600 font-semibold'/></button>
+                    <button onClick={AddToCart} className="btn  btn-circle btn-ghost "><bs_1.BsCartPlus className='text-2xl text-orange-600 font-semibold'/></button>
+                    <button onClick={AddToBookmark} className="btn btn-circle btn-ghost absolute top-0 right-0 "><md_1.MdFavorite className='text-2xl text-orange-600 font-semibold'/></button>
                 </div>
             </div>
         </div>);
 }
+exports.default = ProductCard;

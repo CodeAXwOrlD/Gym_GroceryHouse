@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,29 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from "@/DB/connectDB";
-import AuthCheck from "@/middleware/AuthCheck";
-import { NextResponse } from "next/server";
-import Category from "@/model/Category";
-import Joi from "joi";
-var AddCategorySchema = Joi.object({
-    categoryName: Joi.string().required(),
-    categoryDescription: Joi.string().required(),
-    categoryImage: Joi.string().required(),
-    categorySlug: Joi.string().required(),
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.POST = exports.dynamic = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var AuthCheck_1 = __importDefault(require("@/middleware/AuthCheck"));
+var server_1 = require("next/server");
+var Category_1 = __importDefault(require("@/model/Category"));
+var joi_1 = __importDefault(require("joi"));
+var AddCategorySchema = joi_1.default.object({
+    categoryName: joi_1.default.string().required(),
+    categoryDescription: joi_1.default.string().required(),
+    categoryImage: joi_1.default.string().required(),
+    categorySlug: joi_1.default.string().required(),
 });
-export var dynamic = 'force-dynamic';
-export function POST(req) {
+exports.dynamic = 'force-dynamic';
+function POST(req) {
     return __awaiter(this, void 0, void 0, function () {
         var isAuthenticated, data, categoryName, categoryDescription, categoryImage, categorySlug, error, saveData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 7, , 8]);
-                    return [4 /*yield*/, connectDB()];
+                    return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, AuthCheck(req)];
+                    return [4 /*yield*/, (0, AuthCheck_1.default)(req)];
                 case 2:
                     isAuthenticated = _a.sent();
                     if (!(isAuthenticated === 'admin')) return [3 /*break*/, 5];
@@ -66,25 +72,26 @@ export function POST(req) {
                     categoryName = data.categoryName, categoryDescription = data.categoryDescription, categoryImage = data.categoryImage, categorySlug = data.categorySlug;
                     error = AddCategorySchema.validate({ categoryName: categoryName, categoryDescription: categoryDescription, categoryImage: categoryImage, categorySlug: categorySlug }).error;
                     if (error)
-                        return [2 /*return*/, NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
-                    return [4 /*yield*/, Category.create(data)];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') })];
+                    return [4 /*yield*/, Category_1.default.create(data)];
                 case 4:
                     saveData = _a.sent();
                     if (saveData) {
-                        return [2 /*return*/, NextResponse.json({ success: true, message: "Category added successfully!" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, message: "Category added successfully!" })];
                     }
                     else {
-                        return [2 /*return*/, NextResponse.json({ success: false, message: "Failed to add the category. Please try again!" })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "Failed to add the category. Please try again!" })];
                     }
                     return [3 /*break*/, 6];
-                case 5: return [2 /*return*/, NextResponse.json({ success: false, message: "You are not authorized." })];
+                case 5: return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "You are not authorized." })];
                 case 6: return [3 /*break*/, 8];
                 case 7:
                     error_1 = _a.sent();
                     console.log('Error in adding a new category:', error_1);
-                    return [2 /*return*/, NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
+                    return [2 /*return*/, server_1.NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' })];
                 case 8: return [2 /*return*/];
             }
         });
     });
 }
+exports.POST = POST;

@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,52 +35,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import connectDB from "@/DB/connectDB";
-import { NextResponse } from "next/server";
-import Order from "@/model/Order";
-import AuthCheck from "@/middleware/AuthCheck";
-import Product from "@/model/Product";
-import User from "@/model/User";
-export var dynamic = 'force-dynamic';
-export function GET(req) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GET = exports.dynamic = void 0;
+var connectDB_1 = __importDefault(require("@/DB/connectDB"));
+var server_1 = require("next/server");
+var Order_1 = __importDefault(require("@/model/Order"));
+var AuthCheck_1 = __importDefault(require("@/middleware/AuthCheck"));
+var Product_1 = __importDefault(require("@/model/Product"));
+var User_1 = __importDefault(require("@/model/User"));
+exports.dynamic = 'force-dynamic';
+function GET(req) {
     return __awaiter(this, void 0, void 0, function () {
         var registerProductModel, registerUserModel, isAuthenticated, getData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, connectDB()];
+                case 0: return [4 /*yield*/, (0, connectDB_1.default)()];
                 case 1:
                     _a.sent();
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 9, , 10]);
-                    return [4 /*yield*/, Product.init()];
+                    return [4 /*yield*/, Product_1.default.init()];
                 case 3:
                     registerProductModel = _a.sent();
-                    return [4 /*yield*/, User.init()];
+                    return [4 /*yield*/, User_1.default.init()];
                 case 4:
                     registerUserModel = _a.sent();
-                    return [4 /*yield*/, AuthCheck(req)];
+                    return [4 /*yield*/, (0, AuthCheck_1.default)(req)];
                 case 5:
                     isAuthenticated = _a.sent();
                     if (!(isAuthenticated === 'admin')) return [3 /*break*/, 7];
-                    return [4 /*yield*/, Order.find({}).populate("orderItems.product").populate('user')];
+                    return [4 /*yield*/, Order_1.default.find({}).populate("orderItems.product").populate('user')];
                 case 6:
                     getData = _a.sent();
                     if (getData) {
-                        return [2 /*return*/, NextResponse.json({ success: true, data: getData })];
+                        return [2 /*return*/, server_1.NextResponse.json({ success: true, data: getData })];
                     }
                     else {
-                        return [2 /*return*/, NextResponse.json({ status: 204, success: false, message: 'No bookmark Item found.' })];
+                        return [2 /*return*/, server_1.NextResponse.json({ status: 204, success: false, message: 'No bookmark Item found.' })];
                     }
                     return [3 /*break*/, 8];
-                case 7: return [2 /*return*/, NextResponse.json({ success: false, message: "You are not authorized Please login!" })];
+                case 7: return [2 /*return*/, server_1.NextResponse.json({ success: false, message: "You are not authorized Please login!" })];
                 case 8: return [3 /*break*/, 10];
                 case 9:
                     error_1 = _a.sent();
                     console.log('Error in getting all Orders data :', error_1);
-                    return [2 /*return*/, NextResponse.json({ status: 500, success: false, message: 'Something went wrong. Please try again!' })];
+                    return [2 /*return*/, server_1.NextResponse.json({ status: 500, success: false, message: 'Something went wrong. Please try again!' })];
                 case 10: return [2 /*return*/];
             }
         });
     });
 }
+exports.GET = GET;
